@@ -2,21 +2,44 @@
 //? It imports necessary components from Material-UI, creates a theme with specific colors and typography settings, and applies it to the children components.
 "use client";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material/CssBaseline";
+import { CssBaseline } from "@mui/material";
+import "@fontsource/orbitron"; // Importing Orbitron font
+import "@fontsource/roboto"; // Importing Roboto font
 
 const theme = createTheme({
   palette: {
-    mode: "light",
+    background: {
+      default: "#0D1117",
+    },
     primary: {
-      main: "#1976d2",
+      main: "#00BFA6", 
+      transparent: "rgba(0, 191, 166, 0.4)",
     },
     secondary: {
-      main: "#dc004e",
+      main: "#FF8F00", 
+    },
+    surface: {
+      main: "#161B22",
+    },
+    text: {
+      primary: "#EDEDED", 
+      secondary: "#9CA3AF",
+      tertiary: "#6C757D",
+      quaternary: "#ADB5BD",
+      softRed: "#BF616A",
+    },
+    border: {
+      main: "#2D333B", 
     },
   },
   typography: {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Orbitron, Roboto, sans-serif",
+    fontFamily2: "Roboto, sans-serif",
     fontSize: 14,
+    home: {
+      fontSize: "4rem",
+      fontWeight: 700,
+    },
     h1: {
       fontSize: "2rem",
       fontWeight: 700,
@@ -28,6 +51,15 @@ const theme = createTheme({
     body1: {
       fontSize: "1rem",
       fontWeight: 400,
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,    // Extra small devices (phones)
+      sm: 600,  // Small devices (tablets)
+      md: 960,  // Medium devices (desktops)
+      lg: 1280, // Large devices (larger desktops)
+      xl: 1920, // Extra large devices
     },
   },
 });

@@ -1,3 +1,4 @@
+import { Scale } from "@mui/icons-material";
 import gsap from "gsap";
 
 /**
@@ -42,18 +43,6 @@ export const slidingTextAnimation = (target, options) => {
   );
 };
 
-//? This function provides 3D drop text visual 
-export const droppingTextAnimation = (target, options) => {
-  //* Default animation options
-  const defaultOptions = {
-    duration: 1,
-    delay: 0.5,
-    stagger: 0.2,
-    ease: "power2.out",
-    ...options,
-  };
-}
-
 //? This function provides a typing text animation for the text elements.
 export const typingTextAnimation = (target, options) => {
   //* Default animation options
@@ -87,3 +76,35 @@ export const typingTextAnimation = (target, options) => {
     ease: defaultOptions.ease,
   });
 };
+
+//? This function provides a dropping text animation
+export const droppingTextAnimation = (target, options) => {
+    //* Default animation options
+    const defaultOptions = {
+      duration: 1, // Duration of the animation
+      delay: 0.5, // Delay before the animation starts
+      stagger: 0.2, // Stagger between multiple elements
+      scale: 2, // Initial scale of the text
+      ease: "power2.out", // Easing function
+      ...options,
+    };
+  
+    //* Apply GSAP animation
+    gsap.fromTo(
+      target,
+      {
+        opacity: 0, // Start with invisible text
+        scale: defaultOptions.scale, // Start with smaller scale
+        y: -50, // Start slightly above
+      },
+      {
+        opacity: 1, // Fade in
+        scale: 1, // Scale to normal size
+        y: 0, // Drop to its original position
+        duration: defaultOptions.duration,
+        delay: defaultOptions.delay,
+        stagger: defaultOptions.stagger,
+        ease: defaultOptions.ease,
+      }
+    );
+}

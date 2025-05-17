@@ -1,9 +1,15 @@
 "use client";
-import React, { useEffect,useRef } from "react";
-import { AppBar, Toolbar, Typography, Button, Box, IconButton } from "@mui/material";
+import React, { useEffect, useRef } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  IconButton,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu"; // For mobile menu icon
-import Image from "next/image";
+import MenuIcon from "@mui/icons-material/Menu";
 import { registerNavbarSlidingHoverAnimation } from "@/animations/navbarAnimations";
 
 export default function Navbar({ title }) {
@@ -30,62 +36,74 @@ export default function Navbar({ title }) {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: theme.palette.primary.transparent,
+        backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
         width: {
-          xs: "100%", // Full width on small screens
-          sm: "90%",  // 90% width on small devices
-          md: "80%",  // 80% width on medium and larger screens
+          xs: "100%",
+          sm: "90%",
+          md: "60%",
         },
         margin: "0 auto",
         borderRadius: {
-          xs: "0", // No border radius on small screens
-          sm: "15px", // Rounded corners on larger screens
+          xs: "0",
+          sm: "0 0 40px 40px",
         },
-        marginTop: "10px",
+        position: "relative",
+        overflow: "visible",
+        borderBottom: `4px solid ${theme.palette.text.primary}`,
+        "&::before, &::after": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          width: {
+            xs: 0,
+            sm: "calc(100%)",
+          },
+          height: "50%",
+          backgroundColor: theme.palette.background.default,
+          borderBottom: `0.1px solid ${theme.palette.text.primary}`,
+        },
+
+        "&::before": {
+          left: "-100%",
+        },
+
+        "&::after": {
+          right: "-100%",
+        },
       }}
     >
       <Toolbar
         sx={{
           display: "flex",
-          justifyContent: "space-between", // Space between title and menu icon
+          justifyContent: "centre", // Space between title and menu icon
           alignItems: "center", // Align items vertically
           flexDirection: {
             xs: "row", // Align items horizontally on all screens
           },
         }}
       >
-        {/* Logo and Title */}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Image src="/favicon.ico" alt="Logo" width={40} height={40} />
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 700,
-              marginLeft: 1, // Add spacing between logo and title
-            }}
-          >
-            {title}
-          </Typography>
-        </Box>
         {/* Navigation Options */}
         <Box
           sx={{
+            width: "100%",
             display: {
-              xs: "none", // Hide buttons on small screens
-              sm: "flex", // Show buttons on larger screens
+              xs: "none",
+              sm: "flex",
             },
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {options.map((option,index) => (
+          {options.map((option, index) => (
             <Button
               key={option.label}
               color="inherit"
-              ref ={(el) => (buttonRefs.current[index] = el)} // Store button reference
+              ref={(el) => (buttonRefs.current[index] = el)} // Store button reference
               sx={{
                 marginRight: 2,
                 "&:hover": {
-                  backgroundColor: theme.palette.primary.main,
+                  border: `1px solid ${theme.palette.text.primary}`,
                   color: theme.palette.text.primary,
                 },
               }}
@@ -99,8 +117,8 @@ export default function Navbar({ title }) {
         <IconButton
           sx={{
             display: {
-              xs: "flex", // Show menu icon on small screens
-              sm: "none", // Hide menu icon on larger screens
+              xs: "flex", 
+              sm: "none", 
             },
           }}
           color="inherit"

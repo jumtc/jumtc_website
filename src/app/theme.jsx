@@ -37,7 +37,7 @@ const theme = createTheme({
     fontFamily2: "Roboto, sans-serif",
     fontSize: 14,
     home: {
-      fontSize: "4rem",
+      fontSize: "5rem",
       fontWeight: 700,
     },
     h1: {

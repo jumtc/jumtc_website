@@ -1,6 +1,7 @@
 "use client"
-import Earth from "@/animations/testingAnimation.js";
 import { Box } from "@react-three/drei";
+import ParticlesAnimation from "@/components/particles";
+
 export default function HomePage() {
   return (
     <Box
@@ -12,7 +13,7 @@ export default function HomePage() {
         left: 0,
       }}
     >
-      <Earth />
+      <ParticlesAnimation />
     </Box>
   );
 }

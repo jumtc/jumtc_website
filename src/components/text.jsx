@@ -3,52 +3,133 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
+// Material Icons
+import DesignServicesIcon from "@mui/icons-material/DesignServices";
+import BuildIcon from "@mui/icons-material/Build";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import "@fontsource/russo-one";
+
 export default function Intro() {
   const theme = useTheme();
+
+  const items = [
+    { icon: <DesignServicesIcon fontSize="large" />, label: "Design" },
+    { icon: <BuildIcon fontSize="large" />, label: "Create" },
+    { icon: <AutorenewIcon fontSize="large" />, label: "Revolutionize" },
+  ];
+
   return (
     <Box
       sx={{
-        height: "auto",
+        height: "100vh",
         textAlign: "center",
-        mt: "20vh",
         position: "relative",
+        overflow: "hidden",
+        zIndex: 1,
       }}
     >
-      {/* Top Line: MECHATRONICS */}
-      <Typography
-        variant="h2"
+      {/* Background Logo */}
+      <Box
+        component="img"
+        src="/jumtclogo.png"
+        alt="Logo"
         sx={{
-          fontWeight: "bold",
-          fontSize: {
-            xs: "2.5rem",
-            sm: "4rem",
-            md: "6rem",
-          },
-          color: "#ccc",
-          letterSpacing: "0.1em",
-          fontFamily: "'Orbitron', sans-serif", // Use futuristic font
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: { xs: "60%", sm: "40%", md: "30%" },
+          opacity: 0.3,
+          zIndex: 0,
+          pointerEvents: "none",
         }}
-      >
-        MECHATRONICS
-      </Typography>
+      />
 
-      {/* Bottom Line: CLUB */}
-      <Typography
-        variant="h1"
+      {/* Foreground content */}
+      <Box
         sx={{
-          fontWeight: "900",
-          fontSize: {
-            xs: "3rem",
-            sm: "5rem",
-            md: "7rem",
-          },
-          color: "#666",
-          fontFamily: "'Orbitron', sans-serif",
-          letterSpacing: "0.1em",
+          position: "relative",
+          pt: "20vh",
+          zIndex: 2,
         }}
       >
-        CLUB
-      </Typography>
+        <Typography
+          variant="h2"
+          sx={{
+            fontWeight: "bold",
+            fontSize: {
+              xs: "2.5rem",
+              sm: "4rem",
+              md: "6rem",
+            },
+            color: theme.palette.text.primary,
+            letterSpacing: "0.1em",
+            fontFamily: "'Sakana'",
+            zIndex: 2,
+            position: "relative",
+          }}
+        >
+          MECHATRONICS
+        </Typography>
+
+        <Typography
+          variant="h1"
+          sx={{
+            fontWeight: "900",
+            fontSize: {
+              xs: "3rem",
+              sm: "5rem",
+              md: "7rem",
+            },
+            color: theme.palette.text.secondary,
+            fontFamily: "'Sakana'",
+            letterSpacing: "0.1em",
+            mb: 6,
+            zIndex: 2,
+            position: "relative",
+          }}
+        >
+          CLUB
+        </Typography>
+
+        {/* Icon Text Row */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 6,
+            flexWrap: "wrap",
+            zIndex: 2,
+            position: "relative",
+          }}
+        >
+          {items.map(({ icon, label }) => (
+            <Box
+              key={label}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                color: theme.palette.text.secondary,
+              }}
+            >
+              {icon}
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  mt: 1,
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                  fontFamily: "'Orbitron', sans-serif",
+                }}
+              >
+                {label}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      </Box>
     </Box>
   );
 }

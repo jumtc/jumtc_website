@@ -62,9 +62,13 @@ export default function Intro() {
               sm: "4rem",
               md: "6rem",
             },
-            color: theme.palette.text.primary,
+            color: theme.palette.text.primary, // Softer cyan
+            textShadow: `
+      0 0 3px #00e6e6,
+      0 0 6px #00cccc
+    `,
             letterSpacing: "0.1em",
-            fontFamily: "'Sakana'",
+            fontFamily: "'Varino'",
             zIndex: 2,
             position: "relative",
           }}
@@ -81,8 +85,12 @@ export default function Intro() {
               sm: "5rem",
               md: "7rem",
             },
-            color: theme.palette.text.secondary,
-            fontFamily: "'Sakana'",
+            color: theme.palette.text.primary,
+            textShadow: `
+      0 0 3px #00e6e6,
+      0 0 6px #00cccc
+    `,
+            fontFamily: "'Varino'",
             letterSpacing: "0.1em",
             mb: 6,
             zIndex: 2,

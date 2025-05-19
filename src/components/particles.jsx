@@ -1,79 +1,98 @@
 "use client";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { useEffect, useMemo, useState } from "react";
-import { loadFull } from "tsparticles";
-import { loadPolygonShape } from "@tsparticles/shape-polygon";
-import { useTheme } from "@mui/material/styles";
-const ParticlesComponent = (props) => {
-  const theme = useTheme();
-  const [init, setInit] = useState(false);
 
-  // engine init function for tsparticles
-  const particlesInit = async (engine) => {
-    await loadFull(engine);
-    await loadPolygonShape(engine); 
-  };
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
+
+export default function ParticleImageCanvas() {
+  const mountRef = useRef(null);
 
   useEffect(() => {
-    initParticlesEngine(particlesInit).then(() => {
-      setInit(true);
+    const mount = mountRef.current;
+    if (!mount) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      mount.clientWidth / mount.clientHeight,
+      0.1,
+      1000
+    );
+    camera.position.z = 300;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(mount.clientWidth, mount.clientHeight);
+    mount.appendChild(renderer.domElement);
+
+    const particleSize = 2;
+    const gap = 4;
+
+    const loader = new THREE.TextureLoader();
+    loader.load("/jumtclogo.png", (texture) => {
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      canvas.width = texture.image.width;
+      canvas.height = texture.image.height;
+      context.drawImage(texture.image, 0, 0);
+
+      const imageData = context.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      ).data;
+
+      const geometry = new THREE.BufferGeometry();
+      const positions = [];
+      const colors = [];
+
+      for (let y = 0; y < canvas.height; y += gap) {
+        for (let x = 0; x < canvas.width; x += gap) {
+          const index = (x + y * canvas.width) * 4;
+          const r = imageData[index];
+          const g = imageData[index + 1];
+          const b = imageData[index + 2];
+          const a = imageData[index + 3];
+
+          if (a > 128) {
+            const posX = x - canvas.width / 2;
+            const posY = -y + canvas.height / 2;
+            positions.push(posX, posY, 0);
+            colors.push(r / 255, g / 255, b / 255);
+          }
+        }
+      }
+
+      geometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(positions, 3)
+      );
+      geometry.setAttribute(
+        "color",
+        new THREE.Float32BufferAttribute(colors, 3)
+      );
+
+      const material = new THREE.PointsMaterial({
+        size: particleSize,
+        vertexColors: true,
+      });
+
+      const points = new THREE.Points(geometry, material);
+      scene.add(points);
+
+      const animate = () => {
+        requestAnimationFrame(animate);
+        // points.rotation.y += 0.0015;
+        renderer.render(scene, camera);
+      };
+      animate();
     });
+
+    return () => {
+      while (mount.firstChild) {
+        mount.removeChild(mount.firstChild);
+      }
+    };
   }, []);
 
-  const particlesLoaded = (container) => {
-    console.log("Particles loaded:", container);
-  };
-
-  const options = useMemo(
-    () => ({
-      background: {
-        color: theme.palette.background.default,
-      },
-      fpsLimit: 60,
-      particles: {
-        number: { value: 0 }, // handled by polygon mask
-        color: { value: "#ffffff" },
-        shape: { type: "circle" },
-        size: { value: 3 },
-        move: {
-          enable: true,
-          speed: 1,
-          direction: "none",
-          outModes: { default: "bounce" },
-        },
-      },
-      polygon: {
-        enable: true,
-        scale: 1,
-        type: "inline",
-        move: {
-          radius: 10,
-        },
-        url: "/julogo.svg",
-        inline: {
-          arrangement: "equidistant",
-        },
-        draw: {
-          enable: true,
-          stroke: {
-            color: "white",
-          },
-        },
-      },
-      detectRetina: true,
-    }),
-    []
-  );
-
-  return (
-    <Particles
-      id="polygon"
-      init={particlesInit}
-      loaded={particlesLoaded}
-      options={options}
-      style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: -1 }}
-    />
-  );
-};
-
-export default ParticlesComponent;
+  return <div ref={mountRef} style={{ width: "100%", height: "100vh" }} />;
+}

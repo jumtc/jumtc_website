@@ -5,6 +5,7 @@ import { useTheme } from "@mui/material/styles";
 
 //? Importing components
 import Intro from "@/components/text";
+import WhatWeDo from "@/components/essence";
 
 export default function Home() {
   //* using themes
@@ -20,6 +21,8 @@ export default function Home() {
     >
       {/* The introduction component of mechatronics club */}
       <Intro />
+      {/* What we do */}
+      {/* <WhatWeDo /> */}
     </Box>
   );
 }

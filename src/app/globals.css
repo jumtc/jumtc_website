@@ -68,7 +68,15 @@ a {
 
 @font-face {
   font-family: 'Sakana';
-  src: url('/fonts/Sakana-Regular.woff2') format('woff2');
+  src: url('/fonts/Sakana.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Varino';
+  src: url('/fonts/Varino - Normal.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

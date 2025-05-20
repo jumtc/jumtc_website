@@ -3,6 +3,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import "@fontsource/russo-one";
+import OrbEffect from "@/animations/animatedOrb";
 
 export default function Intro() {
   const theme = useTheme();
@@ -24,6 +25,7 @@ export default function Intro() {
           zIndex: 2,
         }}
       >
+        <OrbEffect />
         <Typography
           variant="h2"
           sx={{

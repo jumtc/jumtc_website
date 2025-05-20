@@ -22,7 +22,7 @@ export default function Home() {
       {/* The introduction component of mechatronics club */}
       <Intro />
       {/* What we do */}
-      <WhatWeDo />
+      {/* <WhatWeDo /> */}
     </Box>
   );
 }

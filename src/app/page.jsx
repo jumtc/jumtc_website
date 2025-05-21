@@ -12,6 +12,7 @@ import {
 //? Importing components
 import Intro from "../components/text";
 import WhatWeDo from "../components/essence";
+import Projects from "../components/projects";
 
 export default function Home() {
   //& References for gsap animations
@@ -47,6 +48,7 @@ export default function Home() {
         />
       {/* Scrolling WhatWeDo Section */}
       <WhatWeDo aboutRef={aboutRef} horizontalRef={horizontalRef} />
+      {/* <Projects /> */}
     </main>
   );
 }

@@ -1,115 +1,132 @@
-//? this section is about the essence of the company, what we do, and how we do it
 "use client";
-//?importing important libraries
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardMedia,
-  useTheme,
-} from "@mui/material";
-import { useRef, useEffect } from "react"; 
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
 
+import React, { useEffect, useRef } from "react";
+import { Box, Typography, Button } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { capsuleScrollEffect } from "../../animations/scrollEffect.js";
 
-//? importing details
-import about from "../../utils/aboutdetails.js";
+const projects = [
+  {
+    title: "Project 1",
+    description: "This is a description of Project 1. It showcases our work.",
+    image: "/testing2.jpg",
+    link: "/project1",
+  },
+  {
+    title: "Project 2",
+    description: "This is a description of Project 2. It highlights our skills.",
+    image: "/testing2.jpg",
+    link: "/project2",
+  },
+];
 
-export default function testing() {
+export default function Projects() {
   const theme = useTheme();
 
-  const aboutRef = useRef(null);
-  const horizontalRef = useRef(null);
+  const capsuleTriggerRef = useRef(null);
+  const capsuleRef = useRef(null);
+  const innerScrollRef = useRef(null);
 
   useEffect(() => {
-    const element = horizontalRef.current;
-    const totalWidth = element.scrollWidth;
-    const viewportWidth = element.clientWidth;
-    const scrollDistance = totalWidth - viewportWidth;
-
-    gsap.to(element, {
-      x: () => `-${scrollDistance}px`,
-      ease: "none",
-      scrollTrigger: {
-        trigger: aboutRef.current,
-        start: "top top",
-        end: () => `+=${totalWidth}px`,
-        scrub: 0.25,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
+    capsuleScrollEffect({
+      capsuleTriggerRef,
+      capsuleRef,
+      innerScrollRef,
     });
-  })
+  }, []);
 
   return (
-    <Box
-      ref={aboutRef}
-      sx={{
-        minHeight: "100vh",
-        height: "auto",
-        bgcolor: theme.palette.background.default,
-        // bgcolor:"red",
-        color: theme.palette.text.primary,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        p: 4,
-      }}
-    >
-      <Typography
-        variant="h3"
-        gutterBottom
-        fontWeight="bold"
-        sx={{ mt: 5, position: "relative" }}
-      >
-        What We Do?
-      </Typography>
-
+    <Box sx={{ height: "auto", width: "100vw" }}>
+      {/* Capsule Trigger Section */}
       <Box
-        ref={horizontalRef}
+        ref={capsuleTriggerRef}
         sx={{
-          display: "flex",
-          height: "auto",
           width: "100vw",
-          position: "relative",
+          height: "100vh", // ensures enough scroll space for both animations
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        {/* Media Card */}
-        {about.map((item, index) => (
-          <Card
-            key={index}
+        {/* Capsule Container */}
+        <Box
+          ref={capsuleRef}
+          sx={{
+            width: "30vw",
+            height: "20vh",
+            borderRadius: "999px",
+            backgroundColor: theme.palette.primary.main,
+            position: "sticky",
+            top: "10vh",
+            zIndex: 10,
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Inner Scroll Content */}
+          <Box
+            ref={innerScrollRef}
             sx={{
-              width: "30vw",
-              flexShrink: 0,
-              mt: 4,
-              bgcolor: theme.palette.surface.main,
-              color: theme.palette.text.primary,
-              borderRadius: "24px 0",
-              mx: 3,
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            <CardMedia
-              component="img"
-              height="300px"
-              image="/jumtclogo.png" // Replace with your image path
-              alt="Card Image"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {item.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {item.description}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
+            {projects.map((project, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  height: "80vh",
+                  color: theme.palette.text.primary,
+                }}
+              >
+                {/* Left: Image */}
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    backgroundImage: `url(${project.image})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                />
+                {/* Right: Text */}
+                <Box
+                  sx={{
+                    width: "0",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                    p: 4,
+                  }}
+                >
+                  <Typography variant="h3" fontWeight="bold" gutterBottom>
+                    {project.title}
+                  </Typography>
+                  <Typography variant="body1" sx={{ mb: 3 }}>
+                    {project.description}
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Learn More
+                  </Button>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
 }
-

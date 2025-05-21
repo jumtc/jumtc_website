@@ -44,66 +44,68 @@ export default function WhatWeDo({ aboutRef, horizontalRef }) {
       >
         What We Do?
       </Typography>
-
-      <Box
-        ref={horizontalRef}
-        sx={{
-          display: "flex",
-          height: "auto",
-          width: "100vw",
-          position: "relative",
-        }}
-      >
-        {/* Media Card */}
-        {about.map((item, index) => (
-          <Card
-            key={index}
-            ref={(el) => (cardRefs.current[index] = el)}
-            onMouseMove={(e) => {
-              cardHoverAnimation({
-                cardRef: cardRefs.current[index],
-                e,
-              })
-            }}
-            onMouseLeave = {() => {
-              gsap.to(cardRefs.current[index], {
-                rotateX: 0,
-                rotateY: 0,
-                scale: 1,
-                ease: "power3.out",
-                duration: 0.4,
-              })
-            }}
-            sx={{
-              width: "30vw",
-              flexShrink: 0,
-              mt: 4,
-              bgcolor: theme.palette.surface.main,
-              color: theme.palette.text.primary,
-              borderRadius: "24px 0",
-              mx: 3,
-              transformStyle: "preserve-3d",
-              perspective: "1000px",
-              transition: "transform 0.2s ease",
-            }}
-          >
-            <CardMedia
-              component="img"
-              height="300px"
-              image="/jumtclogo.png" // Replace with your image path
-              alt="Card Image"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {item.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {item.description}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </Box>
+        <Box
+          ref={horizontalRef}
+          sx={{
+            display: "flex",
+            height: "auto",
+            width: "100vw",
+            position: "relative",
+          }}
+        >
+          {/* Media Card */}
+          {about.map((item, index) => {
+            return (
+              <Card
+                key={index}
+                ref={(el) => (cardRefs.current[index] = el)}
+                onMouseMove={(e) => {
+                  cardHoverAnimation({
+                    cardRef: cardRefs.current[index],
+                    e,
+                  });
+                }}
+                onMouseLeave={() => {
+                  gsap.to(cardRefs.current[index], {
+                    rotateX: 0,
+                    rotateY: 0,
+                    scale: 1,
+                    ease: "power3.out",
+                    duration: 0.4,
+                  });
+                }}
+                sx={{
+                  width: "30vw",
+                  flexShrink: 0,
+                  mt: 4,
+                  bgcolor: theme.palette.surface.main,
+                  color: theme.palette.text.primary,
+                  borderRadius: "24px 0",
+                  mx: 3,
+                  transformStyle: "preserve-3d",
+                  perspective: "1000px",
+                  transition: "transform 0.2s ease",
+                  // transform: `rotateY(${rotateY}deg)`,
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="300px"
+                  image="/jumtclogo.png" // Replace with your image path
+                  alt="Card Image"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {item.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {item.description}
+                  </Typography>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </Box>
     </Box>
   );
 }

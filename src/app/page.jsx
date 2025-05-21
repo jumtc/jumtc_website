@@ -1,28 +1,54 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
+//?importing the scroll animation
+import {
+  scrollEffect,
+  horizontalAboutScrollEffect,
+} from "../animations/scrollEffect";
+
 //? Importing components
-import Intro from "@/components/text";
-import WhatWeDo from "@/components/essence";
+import Intro from "../components/text";
+import WhatWeDo from "../components/essence";
+import Projects from "../components/projects";
 
 export default function Home() {
-  //* using themes
+  //& References for gsap animations
   const theme = useTheme();
+  const triggerRef = useRef(null);
+  const startingTextRef = useRef(null);
+  const orbRef = useRef(null);
+  //* References for the horizontal scroll effect of about section
+  const aboutRef = useRef(null);
+  const horizontalRef = useRef(null);
+
+
+  //* Effect hook for gsap animations
+  useEffect(() => {
+    scrollEffect({
+      triggerRef: triggerRef,
+      introRef: startingTextRef,
+      orbRef: orbRef,
+      aboutRef: aboutRef,
+    });
+    horizontalAboutScrollEffect({
+      triggerRef: aboutRef,
+      horizontalRef: horizontalRef,
+    });
+  });
 
   return (
-    <Box
-      sx={{
-        width: "100vw",
-        height: "auto",
-        backgroundColor: theme.palette.background.default,
-      }}
-    >
-      {/* The introduction component of mechatronics club */}
-      <Intro />
-      {/* What we do */}
-      {/* <WhatWeDo /> */}
-    </Box>
+    <main>
+        <Intro
+          triggerRef={triggerRef}
+          startingTextRef={startingTextRef}
+          orbRef={orbRef}
+        />
+      {/* Scrolling WhatWeDo Section */}
+      <WhatWeDo aboutRef={aboutRef} horizontalRef={horizontalRef} />
+      {/* <Projects /> */}
+    </main>
   );
 }

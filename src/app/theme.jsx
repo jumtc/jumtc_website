@@ -9,7 +9,7 @@ import "@fontsource/roboto"; // Importing Roboto font
 const theme = createTheme({
   palette: {
     background: {
-      default: "#0D1117",
+      default: "rgb(0,0,0)",
     },
     primary: {
       main: "#00BFA6",

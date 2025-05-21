@@ -14,13 +14,15 @@ import Intro from "../components/text";
 import WhatWeDo from "../components/essence";
 
 export default function Home() {
-  //* References for gsap animations
+  //& References for gsap animations
   const theme = useTheme();
   const triggerRef = useRef(null);
   const startingTextRef = useRef(null);
   const orbRef = useRef(null);
+  //* References for the horizontal scroll effect of about section
   const aboutRef = useRef(null);
   const horizontalRef = useRef(null);
+
 
   //* Effect hook for gsap animations
   useEffect(() => {

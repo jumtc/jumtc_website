@@ -5,16 +5,15 @@ import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import "@fontsource/russo-one";
 //?importing components
-import OrbEffect from "../animations/animatedOrb";
+import OrbEffect from "../animations/animatedOrb"; // a 3d orb created in three js
 
 export default function Intro({ triggerRef, startingTextRef, orbRef }) {
-  const theme = useTheme();
-
+  const theme = useTheme(); // using themes
   return (
     <Box
       ref={triggerRef}
       sx={{
-        height: "150vh",
+        height: "100vh",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
@@ -28,7 +27,9 @@ export default function Intro({ triggerRef, startingTextRef, orbRef }) {
           zIndex: 2,
         }}
       >
-        {/* <OrbEffect ref={orbRef} /> */}
+        {/* The bio orb */}
+        <OrbEffect ref={orbRef} />
+        {/* fome page texts */}
         <Box ref={startingTextRef}>
           <Typography
             variant="h2"

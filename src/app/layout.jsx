@@ -8,42 +8,42 @@ import Navbar from "../components/navbar"; // navbar component // parallax provi
 // import metadata from "@/utils/metadata"; //metadata for the website
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+	variable: "--font-geist-sans",
+	subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+	variable: "--font-geist-mono",
+	subsets: ["latin"],
 });
 
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <link rel="icon" href={metadata.icons.icon} /> */}
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="description" content="Hi" />
-        <title>JUMTC</title>
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AppRouterCacheProvider>
-          {/* Wrapping with theme */}
-          <Theme>
-            {/* Wrapping with parallax */}
-            <Navbar
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                zIndex: 1000,
-              }}
-            />
-            {children}
-          </Theme>
-        </AppRouterCacheProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<head>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <link rel="icon" href={metadata.icons.icon} /> */}
+				<link rel="manifest" href="/site.webmanifest" />
+				<meta name="description" content="Hi" />
+				<title>JUMTC</title>
+			</head>
+			<body className={`${geistSans.variable} ${geistMono.variable}`}>
+				<AppRouterCacheProvider>
+					{/* Wrapping with theme */}
+					<Theme>
+						{/* Wrapping with parallax */}
+						<Navbar
+							sx={{
+								position: "absolute",
+								top: 0,
+								left: 0,
+								zIndex: 1000,
+							}}
+						/>
+						{children}
+					</Theme>
+				</AppRouterCacheProvider>
+			</body>
+		</html>
+	);
 }

@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 function page() {
-  return (
-    <div>
-      <p>Events</p>
-    </div>
-  )
+	return (
+		<div>
+			<p>Events</p>
+		</div>
+	);
 }
 
-export default page
+export default page;
